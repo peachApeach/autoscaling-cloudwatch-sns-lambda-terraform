@@ -33,9 +33,12 @@ resource "aws_launch_template" "launchTemp" {
   name_prefix = var.launchConfigName
   image_id = data.aws_ami.amazon-ubuntu.id
   instance_type = "t2.micro"
-  user_data = base64encode("user-data.sh")
-  security_group_names = [ "sg-0e18c27ba7d520de3" ]
+  user_data = filebase64("${path.module}/user-data.sh")
+  vpc_security_group_ids = ["sg-0e18c27ba7d520de3"]
   lifecycle {
     create_before_destroy = true
   }
 }
+
+## check group id
+## check security_group_names 
